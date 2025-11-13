@@ -1,12 +1,12 @@
+# References: https://docs.python.org/3/tutorial/errors.html, https://www.geeksforgeeks.org/pandas/reading-csv-files-in-python/, https://www.geeksforgeeks.org/python/working-csv-files-python/
 # COP3530 Final Project
 # Devon Elmes, Lang Cao, and Melissa Cote
 # Let's get this bread
 import csv
-from Galaxy import Galaxy
+from galaxy import Galaxy
+from heap import MaxHeap
 
 if __name__ == '__main__':
-    # https://www.geeksforgeeks.org/pandas/reading-csv-files-in-python/
-    # https://www.geeksforgeeks.org/python/working-csv-files-python/
     with open('NED30.5.1-D-17.1.2-20200415.csv', mode = 'r') as file:
         # Skip the first 12 lines containing metadata
         for row in range(13):
@@ -55,6 +55,32 @@ if __name__ == '__main__':
 
         print("Invalid rows in file: " + str(invalid_count))
         print("Galaxies in list: " + str(len(galaxies)))
+
+        while True:
+            try:
+                k = int(input(f"Please enter the number of closest galaxies to find between 1 and {len(galaxies)}: "))
+                if 1 <= k <= len(galaxies):
+                    break
+                else:
+                    print("Invalid input.")
+            except ValueError:
+                print("Invalid input.")
+
+
+        closest_heap = MaxHeap(k)
+        closest_heap.insert_first_k(galaxies[0:k])
+        for galaxy in galaxies[k:]:
+            closest_heap.insert_node(galaxy)
+        heap_result = closest_heap.return_all_nodes()
+        print(f"The {k} closest galaxies are: ")
+        print()
+        for galaxy in heap_result:
+            galaxy.print_galaxy()
+
+
+
+
+
 
 
 

@@ -43,6 +43,5 @@ class Galaxy:
         return self.distance
 
     def print_galaxy(self):
-        print("Galaxy Name: " + self.name)
-        print("Galaxy Distance (Mpc): " + str(self.distance))
+        print(f"{self.name} is {self.distance} Megaparsecs away.")
         print()
