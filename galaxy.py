@@ -42,6 +42,12 @@ class Galaxy:
     def get_distance(self):
         return self.distance
 
+    def mpc_to_lightyears(self):
+        # https://www.astronomy.com/astronomy-for-beginners/why-is-a-parsec-3-26-light-years/
+        # https: //en.wikipedia.org/wiki/Parsec
+        # 1 parsec = 3.26156 light-years. Since self.distance is Mpc, also multiply by 10^6.
+        return self.distance * 3.26156 * (10 ** 6)
+
     def print_galaxy(self):
-        print(f"{self.name} is {self.distance} Megaparsecs away.")
+        print(f"{self.name} is {self.distance} Megaparsecs away. That's {self.mpc_to_lightyears()} light-years!")
         print()
