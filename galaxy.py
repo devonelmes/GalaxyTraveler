@@ -1,11 +1,21 @@
+import random
+import copy
+
 class Galaxy:
     def __init__(self, name):
         self.name = name # galaxy id
         self.data = [] # list of dictionaries containing keys mm (distance modulus, m-M), err (error on distance modulus), and mpc (distance in Megaparsecs)
         self.distance = None # distance in Mpc (Megaparsecs)
 
+    def __lt__(self, other):
+        return self.distance < other.distance
+
+    def __repr__(self):
+        return f"{self.name}({self.distance})"
+
     def add_data(self, mm, err, mpc):
-        self.data.append({"mm" : mm, "err" : err, "mpc" : mpc})
+        # data used by set_distance
+        self.data.append({"mm": mm, "err": err, "mpc": mpc})
 
     def set_distance(self):
         # If there is only one galaxy in the database with the ID, set distance to the Mpc given in data
