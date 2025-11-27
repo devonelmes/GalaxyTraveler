@@ -63,3 +63,43 @@ class Galaxy:
     def print_galaxy(self, num):
         print(f"{num}. {self.name} is {self.distance:0.5f} Megaparsecs away. That's {self.mpc_to_lightyears():0.5f} light-years!")
         print()
+
+def quickselect(arr, k):
+    arr_copy = copy.deepcopy(arr)
+
+    if k <= 0:
+        return []
+
+    if k >= len(arr_copy):
+        return sorted(arr_copy, key=lambda g: g.distance)
+
+    def select(left, right, k_smallest):
+        if left == right:
+            return
+
+        pivot_index = random.randint(left, right)
+        pivot_index = partition(left, right, pivot_index)
+
+        if k_smallest == pivot_index:
+            return
+        elif k_smallest < pivot_index:
+            select(left, pivot_index - 1, k_smallest)
+        else:
+            select(pivot_index + 1, right, k_smallest)
+
+    def partition(left, right, pivot_index):
+        pivot_value = arr_copy[pivot_index].distance
+        arr_copy[pivot_index], arr_copy[right] = arr_copy[right], arr_copy[pivot_index]
+
+        store_index = left
+        for i in range(left, right):
+            if arr_copy[i].distance < pivot_value:
+                arr_copy[i], arr_copy[store_index] = arr_copy[store_index], arr_copy[i]
+                store_index += 1
+
+        arr_copy[store_index], arr_copy[right] = arr_copy[right], arr_copy[store_index]
+        return store_index
+
+    select(0, len(arr_copy) - 1, k - 1)
+
+    return sorted(arr_copy[:k], key=lambda g: g.distance)
