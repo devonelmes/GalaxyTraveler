@@ -15,6 +15,7 @@ import copy
 from galaxy import Galaxy
 from heap import MaxHeap
 from ui import App
+import time
 
 WELCOME = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
 
@@ -117,6 +118,15 @@ def quickselect(arr, k):
 
     return sorted(arr_copy[:k], key=lambda g: g.distance)
 
+def HeapChoose(galaxies, k): # returns function run time
+    start = time.time()
+    closest_heap = MaxHeap(k)
+    closest_heap.insert_first_k(galaxies[0:k])
+    for galaxy in galaxies[k:]:
+        closest_heap.insert_node(galaxy)
+    heap_result = closest_heap.return_all_nodes()
+    return heap_result
+
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
@@ -148,23 +158,21 @@ def main():
                     print("Invalid input.")
 
             if ds == 1:
-                closest_heap = MaxHeap(k)
-                closest_heap.insert_first_k(galaxies[0:k])
-                for galaxy in galaxies[k:]:
-                    closest_heap.insert_node(galaxy)
-                heap_result = closest_heap.return_all_nodes()
+                start = time.time()
+                heap_result = HeapChoose(galaxies, k)
+                end = time.time()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Max-heap.")
                 print(f"The {k} closest galaxies are: ")
                 print()
-                num = 1
-                for galaxy in heap_result:
-                    galaxy.print_galaxy(num)
-                    num += 1
+                for i, galaxy in enumerate(heap_result):
+                    galaxy.print_galaxy(i)
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
-                print(f"\nThis method took {0} nanoseconds.") # need to edit once I set up timer
+                print(f"\nThis method took ~{round((end - start) * 1000000000)} nanoseconds.")
             else:
+                start = time.time()
                 quick_arr = quickselect(galaxies, k)
+                end = time.time()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Quickselect.")
                 print(f"\nThe {k} closest galaxies are: ")
@@ -174,7 +182,7 @@ def main():
                     galaxy.print_galaxy(num)
                     num += 1
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
-                print(f"\nThis method took {0} nanoseconds.")  # need to edit once I set up timer
+                print(f"\nThis method took ~{round((end - start) * 1000000000)} nanoseconds.")
         elif option == 2:
             print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
             break
