@@ -68,11 +68,3 @@ class MaxHeap:
     def return_all_nodes(self):
         result = sorted(self.heap_list, key=lambda galaxy: galaxy.distance)
         return result
-
-
-
-
-
-
-
-
