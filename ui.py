@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from galaxy import Galaxy
 
 class App(ctk.CTk):
     def __init__(self):
@@ -15,8 +16,8 @@ class App(ctk.CTk):
         self.btn1 = ctk.CTkButton(self, text="Button 1", command=self.say_hi)
         self.btn1.pack(pady=10)
 
-        self.btn2 = ctk.CTkButton(self, text="Button 2", command=self.say_hello)
-        self.btn2.pack(pady=10)
+        self.lookup = ctk.CTkButton(self, text="Look up closest galaxies")
+        self.lookup.pack(pady=10)
 
         # Main content area
         self.main_frame = ctk.CTkFrame(self)
