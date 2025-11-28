@@ -35,6 +35,15 @@ Which data structure would you like to use to find the galaxies?
 
 Selection: """
 
+def CreateMenuWindow():
+    root = tk.Tk()
+    root.title('✴ Galaxy Traveler ✴')
+    root.geometry('800x500')
+    # Add widgets
+    tk.Label(root, text=WELCOME).pack()
+    tk.Button(root,)
+    return root
+
 def ParseGalaxies(filepath):
     with open(filepath, mode = 'r') as file:
         # Skip the first 12 lines containing metadata
@@ -86,7 +95,7 @@ def ParseGalaxies(filepath):
         print("Galaxies in list: " + str(len(galaxies)))
     return galaxies
 
-def quickselect(arr, k):
+def Quickselect(arr, k):
     arr_copy = copy.deepcopy(arr)
 
     if k <= 0:
@@ -129,6 +138,12 @@ def quickselect(arr, k):
 def main():
     galaxies = ParseGalaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
+    # Create display window
+    window = CreateMenuWindow()
+
+    window.mainloop()
+
+    # the following code won't run until the pop-up window from tkinter is closed:
     option = int(input(WELCOME))
 
     if option == 1:
