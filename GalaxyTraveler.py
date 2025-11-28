@@ -7,7 +7,6 @@ References:
     https://docs.python.org/3/tutorial/errors.html,
     https://www.geeksforgeeks.org/pandas/reading-csv-files-in-python/,
     https://www.geeksforgeeks.org/python/working-csv-files-python/
-
 """
 
 import csv
@@ -18,9 +17,9 @@ import customtkinter as ctk
 from galaxy import Galaxy
 from heap import MaxHeap
 
-WELCOME = """
-✴✴✴ Welcome, galaxy traveler! ✴✴✴
+WELCOME = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
 
+MENU = """
 ========= MENU =========
 Please select from the following:
 1. Choose how many of the closest galaxies to find.
@@ -30,22 +29,22 @@ Please select from the following:
 Selection: """
 
 DATA_STRUC = """
-Which data structure would you like to use to find the galaxies?
+Which method would you like to use to find the galaxies?
 1. Max-heap
 2. Quickselect
 
 Selection: """
 
-def CreateMenuWindow():
+def create_menu_window():
     root = tk.Tk()
-    root.title('✴ Galaxy Traveler ✴')
+    root.title('✴ Travel Destinations: Nearest Galaxies ✴')
     root.geometry('800x500')
     # Add widgets
     tk.Label(root, text=WELCOME).pack()
     tk.Button(root, )
     return root
 
-def ParseGalaxies(filepath):
+def parse_galaxies(filepath):
     with open(filepath, mode = 'r') as file:
         # Skip the first 12 lines containing metadata
         for row in range(13):
@@ -96,7 +95,7 @@ def ParseGalaxies(filepath):
         print("Galaxies in list: " + str(len(galaxies)))
     return galaxies
 
-def Quickselect(arr, k):
+def quickselect(arr, k):
     arr_copy = copy.deepcopy(arr)
 
     if k <= 0:
@@ -137,44 +136,72 @@ def Quickselect(arr, k):
     return sorted(arr_copy[:k], key=lambda g: g.distance)
 
 def main():
-    galaxies = ParseGalaxies('NED30.5.1-D-17.1.2-20200415.csv')
+    galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
     # Create display window
-    window = CreateMenuWindow()
+    window = create_menu_window()
 
-    window.mainloop()
+    # window.mainloop()
+    print(WELCOME)
 
-    # the following code won't run until the pop-up window from tkinter is closed:
-    option = int(input(WELCOME))
-
-    if option == 1:
-        while True:
-            try:
-                k = int(input(f"\nPlease enter the number of closest galaxies to find between 1 and {len(galaxies)}: "))
+    while True:
+        option = int(input(MENU))
+        if option == 1:
+            while True:
+                # From <peps.python.org/pep-0008/>: "Additionally, for all try/except clauses,
+                # limit the try clause to the absolute minimum amount of code necessary."
+                try:
+                    k = int(input(f"\nPlease enter the number of closest galaxies to find between 1 and {len(galaxies)}: "))
+                except ValueError:
+                    print("Invalid input.")
                 if 1 <= k <= len(galaxies):
                     break
                 else:
                     print("Invalid input.")
-            except ValueError:
-                print("Invalid input.")
 
-        closest_heap = MaxHeap(k)
-        closest_heap.insert_first_k(galaxies[0:k])
-        for galaxy in galaxies[k:]:
-            closest_heap.insert_node(galaxy)
-        heap_result = closest_heap.return_all_nodes()
-        print(f"The {k} closest galaxies are: ")
-        print()
-        num = 1
-        for galaxy in heap_result:
-            galaxy.print_galaxy(num)
-            num += 1
+            while True:
+                try:
+                    ds = int(input(DATA_STRUC))
+                except ValueError:
+                    print("Invalid input.")
+                if 1 <= ds <= 2:
+                    break
+                else:
+                    print("Invalid input.")
 
-    elif option == 2:
-        print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
-
-    else:
-        print("Invalid selection. Goodbye!") # We can turn this into a loop if you want, so it keeps prompting.
+            if ds == 1:
+                closest_heap = MaxHeap(k)
+                closest_heap.insert_first_k(galaxies[0:k])
+                for galaxy in galaxies[k:]:
+                    closest_heap.insert_node(galaxy)
+                heap_result = closest_heap.return_all_nodes()
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
+                print("\nYou chose Max-heap.")
+                print(f"The {k} closest galaxies are: ")
+                print()
+                num = 1
+                for galaxy in heap_result:
+                    galaxy.print_galaxy(num)
+                    num += 1
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
+                print(f"\nThis method took {0} nanoseconds.") # need to edit once I set up timer
+            else:
+                quick_arr = quickselect(galaxies, k)
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
+                print("\nYou chose Quickselect.")
+                print(f"\nThe {k} closest galaxies are: ")
+                print()
+                num = 1
+                for galaxy in quick_arr:
+                    galaxy.print_galaxy(num)
+                    num += 1
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
+                print(f"\nThis method took {0} nanoseconds.")  # need to edit once I set up timer
+        elif option == 2:
+            print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
+            break
+        else:
+            print("Invalid selection. Try again.") # We can turn this into a loop if you want, so it keeps prompting.
 
 if __name__ == '__main__':
     main()
