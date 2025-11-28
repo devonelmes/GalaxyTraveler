@@ -12,10 +12,9 @@ References:
 import csv
 import random
 import copy
-import tkinter as tk
-import customtkinter as ctk
 from galaxy import Galaxy
 from heap import MaxHeap
+from ui import App
 
 WELCOME = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
 
@@ -34,48 +33,6 @@ Which method would you like to use to find the galaxies?
 2. Quickselect
 
 Selection: """
-
-# def CreateMenuWindow():
-#     ctk.set_appearance_mode("dark")
-#     ctk.set_default_color_theme("blue")
-
-#     root = tk.Tk()
-#     root.title('✴ Galaxy Traveler ✴')
-#     root.geometry('800x500')
-#     # Add widgets
-#     tk.Label(root, text=WELCOME).pack()
-#     tk.Button(root, )
-#     return root
-
-class App(ctk.CTk):
-    def __init__(self):
-        super().__init__()
-
-        self.title("✴ Galaxy Traveler ✴")
-        self.geometry("400x300")
-
-        # Sidebar frame
-        self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
-        self.sidebar.pack(side="left", fill="y")
-
-        # Sidebar buttons
-        ctk.CTkLabel(self.sidebar, text="Menu", font=("Helvetica", 18)).pack(pady=20)
-
-        self.btn1 = ctk.CTkButton(self.sidebar, text="Button 1", command=self.say_hi)
-        self.btn1.pack(pady=10)
-
-        self.btn2 = ctk.CTkButton(self.sidebar, text="Button 2")
-        self.btn2.pack(pady=10)
-
-        # Main content area
-        self.main_frame = ctk.CTkFrame(self)
-        self.main_frame.pack(side="left", fill="both", expand=True)
-
-        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
-        self.label.pack(pady=40)
-
-    def say_hi(self):
-        self.label.configure(text="Hi 👋")
 
 def parse_galaxies(filepath):
     with open(filepath, mode = 'r') as file:
@@ -129,6 +86,19 @@ def quickselect(arr, k):
     if k <= 0:
         return []
 
+    def partition(left, right, pivot_index):
+        pivot_value = arr_copy[pivot_index].distance
+        arr_copy[pivot_index], arr_copy[right] = arr_copy[right], arr_copy[pivot_index]
+
+        store_index = left
+        for i in range(left, right):
+            if arr_copy[i].distance < pivot_value:
+                arr_copy[i], arr_copy[store_index] = arr_copy[store_index], arr_copy[i]
+                store_index += 1
+
+        arr_copy[store_index], arr_copy[right] = arr_copy[right], arr_copy[store_index]
+        return store_index
+
     def select(left, right, k_smallest):
         if left == right:
             return
@@ -142,19 +112,6 @@ def quickselect(arr, k):
             select(left, pivot_index - 1, k_smallest)
         else:
             select(pivot_index + 1, right, k_smallest)
-
-    def partition(left, right, pivot_index):
-        pivot_value = arr_copy[pivot_index].distance
-        arr_copy[pivot_index], arr_copy[right] = arr_copy[right], arr_copy[pivot_index]
-
-        store_index = left
-        for i in range(left, right):
-            if arr_copy[i].distance < pivot_value:
-                arr_copy[i], arr_copy[store_index] = arr_copy[store_index], arr_copy[i]
-                store_index += 1
-
-        arr_copy[store_index], arr_copy[right] = arr_copy[right], arr_copy[store_index]
-        return store_index
 
     select(0, len(arr_copy) - 1, k - 1)
 
