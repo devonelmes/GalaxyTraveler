@@ -35,14 +35,47 @@ Which method would you like to use to find the galaxies?
 
 Selection: """
 
-def create_menu_window():
-    root = tk.Tk()
-    root.title('✴ Travel Destinations: Nearest Galaxies ✴')
-    root.geometry('800x500')
-    # Add widgets
-    tk.Label(root, text=WELCOME).pack()
-    tk.Button(root, )
-    return root
+# def CreateMenuWindow():
+#     ctk.set_appearance_mode("dark")
+#     ctk.set_default_color_theme("blue")
+
+#     root = tk.Tk()
+#     root.title('✴ Galaxy Traveler ✴')
+#     root.geometry('800x500')
+#     # Add widgets
+#     tk.Label(root, text=WELCOME).pack()
+#     tk.Button(root, )
+#     return root
+
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("✴ Galaxy Traveler ✴")
+        self.geometry("400x300")
+
+        # Sidebar frame
+        self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
+        self.sidebar.pack(side="left", fill="y")
+
+        # Sidebar buttons
+        ctk.CTkLabel(self.sidebar, text="Menu", font=("Helvetica", 18)).pack(pady=20)
+
+        self.btn1 = ctk.CTkButton(self.sidebar, text="Button 1", command=self.say_hi)
+        self.btn1.pack(pady=10)
+
+        self.btn2 = ctk.CTkButton(self.sidebar, text="Button 2")
+        self.btn2.pack(pady=10)
+
+        # Main content area
+        self.main_frame = ctk.CTkFrame(self)
+        self.main_frame.pack(side="left", fill="both", expand=True)
+
+        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
+        self.label.pack(pady=40)
+
+    def say_hi(self):
+        self.label.configure(text="Hi 👋")
 
 def parse_galaxies(filepath):
     with open(filepath, mode = 'r') as file:
@@ -96,9 +129,6 @@ def quickselect(arr, k):
     if k <= 0:
         return []
 
-    if k >= len(arr_copy):
-        return sorted(arr_copy, key=lambda g: g.distance)
-
     def select(left, right, k_smallest):
         if left == right:
             return
@@ -133,11 +163,7 @@ def quickselect(arr, k):
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
-    # Create display window
-    window = create_menu_window()
-
-    # window.mainloop()
-    print(WELCOME)
+    window = App()
 
     while True:
         option = int(input(MENU))
