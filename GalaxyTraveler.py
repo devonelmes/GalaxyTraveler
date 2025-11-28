@@ -14,6 +14,7 @@ import csv
 import random
 import copy
 import tkinter as tk
+import customtkinter as ctk
 from galaxy import Galaxy
 from heap import MaxHeap
 
@@ -41,7 +42,7 @@ def CreateMenuWindow():
     root.geometry('800x500')
     # Add widgets
     tk.Label(root, text=WELCOME).pack()
-    tk.Button(root,)
+    tk.Button(root, )
     return root
 
 def ParseGalaxies(filepath):
