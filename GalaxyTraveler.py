@@ -168,11 +168,7 @@ def quickselect(arr, k):
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
-    # Create display window
-    window = create_menu_window()
-
-    # window.mainloop()
-    print(WELCOME)
+    window = App()
 
     while True:
         option = int(input(MENU))
