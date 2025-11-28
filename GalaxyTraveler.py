@@ -13,7 +13,7 @@ import csv
 import random
 import copy
 import tkinter as tk
-import customtkinter as ctk
+# import customtkinter as ctk
 from galaxy import Galaxy
 from heap import MaxHeap
 
@@ -51,10 +51,6 @@ def parse_galaxies(filepath):
             next(file)
 
         csvFile = csv.reader(file)
-        seen = set()
-        current_id = None
-        grouped = True
-        line_num = 0
 
         # Stores galaxy objects
         galaxies = []
@@ -76,7 +72,6 @@ def parse_galaxies(filepath):
             except ValueError:
                 invalid_count += 1
                 continue
-
             # If galaxy has already been added to galaxies, add information from this row to its data list
             if galaxy_id in id_index:
                 galaxies[id_index[galaxy_id]].add_data(mm, err, mpc)
