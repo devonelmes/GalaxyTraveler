@@ -131,6 +131,7 @@ def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
     window = App()
+    window.mainloop()
 
     while True:
         option = int(input(MENU))
