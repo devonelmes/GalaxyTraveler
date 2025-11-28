@@ -12,7 +12,6 @@ class Galaxy:
         return f"{self.name}({self.distance})"
 
     def add_data(self, mm, err, mpc):
-        # data used by set_distance
         self.data.append({"mm": mm, "err": err, "mpc": mpc})
 
     def set_distance(self):
