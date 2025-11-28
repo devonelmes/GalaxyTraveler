@@ -11,6 +11,9 @@ References:
 """
 
 import csv
+import random
+import copy
+import tkinter as tk
 from galaxy import Galaxy
 from heap import MaxHeap
 
@@ -32,8 +35,8 @@ Which data structure would you like to use to find the galaxies?
 
 Selection: """
 
-if __name__ == '__main__':
-    with open('NED30.5.1-D-17.1.2-20200415.csv', mode = 'r') as file:
+def ParseGalaxies(filepath):
+    with open(filepath, mode = 'r') as file:
         # Skip the first 12 lines containing metadata
         for row in range(13):
             next(file)
@@ -81,34 +84,81 @@ if __name__ == '__main__':
 
         print("Invalid rows in file: " + str(invalid_count))
         print("Galaxies in list: " + str(len(galaxies)))
+    return galaxies
 
-        option = int(input(WELCOME))
+def quickselect(arr, k):
+    arr_copy = copy.deepcopy(arr)
 
-        if option == 1:
-            while True:
-                try:
-                    k = int(input(f"\nPlease enter the number of closest galaxies to find between 1 and {len(galaxies)}: "))
-                    if 1 <= k <= len(galaxies):
-                        break
-                    else:
-                        print("Invalid input.")
-                except ValueError:
-                    print("Invalid input.")
+    if k <= 0:
+        return []
 
-            closest_heap = MaxHeap(k)
-            closest_heap.insert_first_k(galaxies[0:k])
-            for galaxy in galaxies[k:]:
-                closest_heap.insert_node(galaxy)
-            heap_result = closest_heap.return_all_nodes()
-            print(f"The {k} closest galaxies are: ")
-            print()
-            num = 1
-            for galaxy in heap_result:
-                galaxy.print_galaxy(num)
-                num += 1
+    if k >= len(arr_copy):
+        return sorted(arr_copy, key=lambda g: g.distance)
 
-        elif option == 2:
-            print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
+    def select(left, right, k_smallest):
+        if left == right:
+            return
 
+        pivot_index = random.randint(left, right)
+        pivot_index = partition(left, right, pivot_index)
+
+        if k_smallest == pivot_index:
+            return
+        elif k_smallest < pivot_index:
+            select(left, pivot_index - 1, k_smallest)
         else:
-            print("Invalid selection. Goodbye!") # We can turn this into a loop if you want, so it keeps prompting.
+            select(pivot_index + 1, right, k_smallest)
+
+    def partition(left, right, pivot_index):
+        pivot_value = arr_copy[pivot_index].distance
+        arr_copy[pivot_index], arr_copy[right] = arr_copy[right], arr_copy[pivot_index]
+
+        store_index = left
+        for i in range(left, right):
+            if arr_copy[i].distance < pivot_value:
+                arr_copy[i], arr_copy[store_index] = arr_copy[store_index], arr_copy[i]
+                store_index += 1
+
+        arr_copy[store_index], arr_copy[right] = arr_copy[right], arr_copy[store_index]
+        return store_index
+
+    select(0, len(arr_copy) - 1, k - 1)
+
+    return sorted(arr_copy[:k], key=lambda g: g.distance)
+
+def main():
+    galaxies = ParseGalaxies('NED30.5.1-D-17.1.2-20200415.csv')
+
+    option = int(input(WELCOME))
+
+    if option == 1:
+        while True:
+            try:
+                k = int(input(f"\nPlease enter the number of closest galaxies to find between 1 and {len(galaxies)}: "))
+                if 1 <= k <= len(galaxies):
+                    break
+                else:
+                    print("Invalid input.")
+            except ValueError:
+                print("Invalid input.")
+
+        closest_heap = MaxHeap(k)
+        closest_heap.insert_first_k(galaxies[0:k])
+        for galaxy in galaxies[k:]:
+            closest_heap.insert_node(galaxy)
+        heap_result = closest_heap.return_all_nodes()
+        print(f"The {k} closest galaxies are: ")
+        print()
+        num = 1
+        for galaxy in heap_result:
+            galaxy.print_galaxy(num)
+            num += 1
+
+    elif option == 2:
+        print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
+
+    else:
+        print("Invalid selection. Goodbye!") # We can turn this into a loop if you want, so it keeps prompting.
+
+if __name__ == '__main__':
+    main()
