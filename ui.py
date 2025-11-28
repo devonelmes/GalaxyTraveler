@@ -7,17 +7,18 @@ class App(ctk.CTk):
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
         self.geometry("400x300")
 
-        # Sidebar frame
-        self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
-        self.sidebar.pack(side="left", fill="y")
+        self.title("✴ Galaxy Traveler ✴")
+        self.geometry("400x300")
 
         # Sidebar buttons
-        ctk.CTkLabel(self.sidebar, text="Menu", font=("Helvetica", 18)).pack(pady=20)
+        ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
 
-        self.btn1 = ctk.CTkButton(self.sidebar, text="Button 1", command=self.say_hi)
+        # ctk.CTkTextbox(self, )
+
+        self.btn1 = ctk.CTkButton(self, text="Button 1", command=self.say_hi)
         self.btn1.pack(pady=10)
 
-        self.btn2 = ctk.CTkButton(self.sidebar, text="Button 2")
+        self.btn2 = ctk.CTkButton(self, text="Button 2")
         self.btn2.pack(pady=10)
 
         # Main content area
