@@ -177,10 +177,8 @@ def main():
                 print("\nYou chose Quickselect.")
                 print(f"\nThe {k} closest galaxies are: ")
                 print()
-                num = 1
-                for galaxy in quick_arr:
-                    galaxy.print_galaxy(num)
-                    num += 1
+                for i, galaxy in enumerate(quick_arr):
+                    galaxy.print_galaxy(i)
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print(f"\nThis method took ~{round((end - start) * 1000000000)} nanoseconds.")
         elif option == 2:
