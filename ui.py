@@ -11,10 +11,8 @@ class App(ctk.CTk):
         # Sidebar buttons
         ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
 
-        # ctk.CTkTextbox(self, )
-
-        self.btn1 = ctk.CTkButton(self, text="Button 1", command=self.say_hi)
-        self.btn1.pack(pady=10)
+        self.k_entry = ctk.CTkEntry(self, width=120, placeholder_text="Enter k")
+        self.k_entry.pack(pady=8)
 
         self.lookup = ctk.CTkButton(self, text="Look up closest galaxies")
         self.lookup.pack(pady=10)
