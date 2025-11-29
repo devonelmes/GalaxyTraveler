@@ -21,7 +21,8 @@ class App(ctk.CTk):
 
         image_path = join("Starfield Images", "Starfield 8 - 1024x1024.png")
         pil_image = Image.open(image_path)
-        self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(self.DIMENSIONS[0], self.DIMENSIONS[1]))
+        # change size=(x, y) to wanted size
+        self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(2048, 2048))
 
         self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
