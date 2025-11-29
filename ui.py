@@ -12,7 +12,6 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        # Set title and window dimensions
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
         self.geometry("1300x800")
         # self.grid_columnconfigure(0, weight=1)
