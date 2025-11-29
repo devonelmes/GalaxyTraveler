@@ -6,10 +6,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
-        self.geometry("400x300")
-
-        self.title("✴ Galaxy Traveler ✴")
-        self.geometry("400x300")
+        self.geometry("1000x600")
 
         # Sidebar buttons
         ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
@@ -31,3 +28,6 @@ class App(ctk.CTk):
 
     def say_hi(self):
         self.label.configure(text="Hi 👋")
+
+    def say_hello(self):
+        self.label.configure(text="Hello!")
