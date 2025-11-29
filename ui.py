@@ -7,6 +7,20 @@ from galaxy import Galaxy
 from os.path import join
 
 
+class MenuFrame(ctk.CTkFrame):
+    # Create menu frame in the top left of the window with title, k input field and button(s).
+    DIMENSIONS = (500, 300)
+
+
+class DisplayFrame(ctk.CTkFrame):
+    # Create galaxy display scrollable frame in bottom left of the window.
+    DIMENSIONS = (500, 500)
+
+
+class GraphFrame(ctk.CTkFrame):
+    # Create graph display canvas frame on the right side of the window.
+    DIMENSIONS = (800, 800)
+
 
 class App(ctk.CTk):
     DIMENSIONS = (1300, 800)
@@ -22,7 +36,7 @@ class App(ctk.CTk):
         self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(self.DIMENSIONS[0], self.DIMENSIONS[1]))
         self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        # Partition window (Menu - top right, 500x300; Scroll galaxy display - bottom left, 500x500; graph - right, 800x800)
+        # Set partition windows
         # code
         # Sidebar buttons
         ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
