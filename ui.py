@@ -4,6 +4,7 @@ Resources:
 """
 import tkinter as tk
 import customtkinter as ctk
+from PIL import Image
 from galaxy import Galaxy
 
 class App(ctk.CTk):

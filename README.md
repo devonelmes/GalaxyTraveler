@@ -10,3 +10,4 @@ It will then use two different search algorithms to find them and display it to 
 
 Installing dependencies:
 > pip install customtkinter
+> pip install pillow
