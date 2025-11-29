@@ -2,27 +2,29 @@
 Resources:
     https://customtkinter.tomschimansky.com/
 """
-import customtkinter
-# import tkinter as tk
+import tkinter as tk
 import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
+from os.path import join
+
+
 
 class App(ctk.CTk):
+    DIMENSIONS = (1300, 800)
+
     def __init__(self):
         super().__init__()
 
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
         self.geometry("1300x800")
-        # self.grid_columnconfigure(0, weight=1)
-        # self.grid_rowconfigure((0, 1), weight=1)
-        #
-        # # Partition window
-        # self.menu_frame = customtkinter.CTkFrame(self)
-        # self.menu_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
 
-        # self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
-        # self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        image_path = join("Starfield Images", "Starfield 8 - 1024x1024.png")
+        pil_image = Image.open(image_path)
+        self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(self.DIMENSIONS[0], self.DIMENSIONS[1]))
+
+        self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Sidebar buttons
         ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
