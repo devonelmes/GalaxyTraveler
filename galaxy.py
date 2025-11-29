@@ -1,3 +1,18 @@
+"""References:
+
+set_distance():
+    Measurement of Distances: https://ned.ipac.caltech.edu/level5/Sept11/Freedman/Freedman3.html
+    https://en.wikipedia.org/wiki/Distance_modulus
+    m - M (distance modulus) = 5 log d - 5. d is parsecs, log base 10
+    https://astro.wku.edu/labs/m100/mags.html
+    Solve for d to get distance in parsecs: d = 10 ** (0.2 * (dMod + 5))
+    Convert parsecs to Mpc: d / 10 ** 6
+
+mpc_to_lightyears():
+    https://www.astronomy.com/astronomy-for-beginners/why-is-a-parsec-3-26-light-years/
+    https: //en.wikipedia.org/wiki/Parsec
+    1 parsec = 3.26156 light-years. Since self.distance is Mpc, also multiply by 10^6.
+"""
 
 class Galaxy:
     def __init__(self, name):
@@ -35,13 +50,6 @@ class Galaxy:
             # Calculate weighted mean of distance modulus
             d_mod = sum(numerator) / sum(denominator)
 
-            # Measurement of Distances: https://ned.ipac.caltech.edu/level5/Sept11/Freedman/Freedman3.html
-            # https://en.wikipedia.org/wiki/Distance_modulus
-            # m - M (distance modulus) = 5 log d - 5. d is parsecs, log base 10
-            # https://astro.wku.edu/labs/m100/mags.html
-            # Solve for d to get distance in parsecs: d = 10 ** (0.2 * (dMod + 5))
-            # Convert parsecs to Mpc: d / 10 ** 6
-
             d_parsecs = 10 ** (0.2 * (d_mod + 5))
             d_mpc = d_parsecs / 10 ** 6
 
@@ -51,10 +59,6 @@ class Galaxy:
         return self.distance
 
     def mpc_to_lightyears(self):
-        # https://www.astronomy.com/astronomy-for-beginners/why-is-a-parsec-3-26-light-years/
-        # https: //en.wikipedia.org/wiki/Parsec
-        # 1 parsec = 3.26156 light-years. Since self.distance is Mpc, also multiply by 10^6.
-
         return self.distance * 3.26156 * (10 ** 6)
 
     def print_galaxy(self, num):

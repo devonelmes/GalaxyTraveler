@@ -1,9 +1,8 @@
-"""
-References:
-    COP3530 Exam 1 review video,
-    COP3530 Module 7 lectures,
-    https://www.geeksforgeeks.org/python/python-lists/,
-    https://docs.python.org/3/howto/sorting.html
+"""References:
+        COP3530 Exam 1 review video,
+        COP3530 Module 7 lectures,
+        https://www.geeksforgeeks.org/python/python-lists/,
+        https://docs.python.org/3/howto/sorting.html
 """
 
 class MaxHeap:
