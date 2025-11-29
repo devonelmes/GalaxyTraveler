@@ -51,7 +51,6 @@ def main():
                     break
                 else:
                     print("Invalid input.")
-
             while True:
                 try:
                     ds = int(input(DATA_STRUC))
@@ -61,11 +60,10 @@ def main():
                     break
                 else:
                     print("Invalid input.")
-
             if ds == 1:
-                start = time.time()
+                start = time.time_ns()
                 heap_result = HeapChoose(galaxies, k)
-                end = time.time()
+                end = time.time_ns()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Max-heap.")
                 print(f"The {k} closest galaxies are: ")
@@ -73,11 +71,11 @@ def main():
                 for i, galaxy in enumerate(heap_result):
                     galaxy.print_galaxy(i)
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
-                print(f"\nThis method took ~{round((end - start) * 1000000000)} nanoseconds.")
+                print(f"\nThis method took ~{(end - start)} nanoseconds.")
             else:
-                start = time.time()
+                start = time.time_ns()
                 quick_arr = quickselect(galaxies, k)
-                end = time.time()
+                end = time.time_ns()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Quickselect.")
                 print(f"\nThe {k} closest galaxies are: ")
@@ -85,7 +83,8 @@ def main():
                 for i, galaxy in enumerate(quick_arr):
                     galaxy.print_galaxy(i)
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
-                print(f"\nThis method took ~{round((end - start) * 1000000000)} nanoseconds.")
+                print(f"\nThis method took ~{(end - start)} nanoseconds.")
+                galaxies.clear()
         elif option == 2:
             print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
             break
