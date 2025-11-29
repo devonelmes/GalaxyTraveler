@@ -9,8 +9,9 @@ References:
     https://www.geeksforgeeks.org/python/working-csv-files-python/
 """
 
+import customtkinter as ctk
+from PIL import Image
 from ui import App
-import time
 from helpers import *
 
 WELCOME = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
@@ -31,10 +32,24 @@ Which method would you like to use to find the galaxies?
 
 Selection: """
 
+# def set_background(app):
+#     # Create backgrounds from images.
+#     # Menu background:
+#     image1_path = "Starfield Images/Starfield 8 - 512x512.png"
+#     pil_image1 = Image.open(image1_path)
+#     bg_ctk_image1 = ctk.CTkImage(light_image=pil_image1, dark_image=pil_image1, size=(500, 300))
+#     bg1_label = ctk.CTkLabel(master=app, text="", image=bg_ctk_image1)
+#     bg1_label.place(x=-325, y=-200, relwidth=1, relheight=1) # this code doesn't work right
+#
+#     # Graphic background: (unfinished)
+#     image2_path = "Starfield Images/Starfield 8 - 1024x1024.png"
+#     pil_image2 = Image.open(image2_path)
+
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
     window = App()
+    # set_background(window)
     window.mainloop()
 
     # Simple console UI
