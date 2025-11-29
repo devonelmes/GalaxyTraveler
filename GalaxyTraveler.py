@@ -37,6 +37,7 @@ def main():
     window = App()
     window.mainloop()
 
+    # Simple console UI
     while True:
         option = int(input(MENU))
         if option == 1:
