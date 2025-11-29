@@ -19,7 +19,7 @@ def parse_galaxies(filepath):
 
         # Read csv file and create galaxy objects
         invalid_count = 0
-        for i, row in enumerate(csvFile):
+        for row in csvFile:
             try:
                 galaxy_id = row[3] # NED "Preferred Object Name" for the host galaxy
                 mm = float(row[4]) # Distance Modulus expressed in mag
