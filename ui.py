@@ -1,3 +1,8 @@
+"""
+Resources:
+    https://customtkinter.tomschimansky.com/
+"""
+
 import customtkinter as ctk
 from galaxy import Galaxy
 
@@ -6,7 +11,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
-        self.geometry("1000x600")
+        self.geometry("1300x800")
 
         # Sidebar buttons
         ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
