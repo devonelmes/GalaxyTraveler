@@ -5,6 +5,7 @@ import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
 from os.path import join
+from helpers import HeapChoose, quickselect, parse_galaxies
 
 
 class MenuFrame(ctk.CTkFrame):
@@ -27,6 +28,8 @@ class App(ctk.CTk):
 
     def __init__(self):
         super().__init__()
+        self.galaxies = parse_galaxies("NED30.5.1-D-17.1.2-20200415.csv")
+
         # Set app window title and dimensions.
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
         self.geometry("1300x800")
@@ -43,9 +46,8 @@ class App(ctk.CTk):
 
         self.k_entry = ctk.CTkEntry(self, width=120, placeholder_text="Enter k")
         self.k_entry.pack(pady=8)
-        self.k_entry.bind("<KeyRelease>", self.on_k_change)
 
-        self.lookup = ctk.CTkButton(self, text="Look up closest galaxies")
+        self.lookup = ctk.CTkButton(self, text="Look up closest galaxies", command=self.display_closest)
         self.lookup.pack(pady=10)
 
         # Main content area
@@ -55,5 +57,10 @@ class App(ctk.CTk):
         self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
         self.label.pack(pady=40)
 
-    def on_k_change(self):
-        pass
+    def display_closest(self, *args):
+        k = self.k_entry.get()
+        if k.isdecimal():
+            results = HeapChoose(self.galaxies, int(k))
+            return results
+        else:
+            return []
