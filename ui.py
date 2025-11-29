@@ -42,7 +42,7 @@ class App(ctk.CTk):
         # Set partition windows
         # code
         # Sidebar buttons
-        ctk.CTkLabel(self, text="Options", font=("Helvetica", 18)).pack(pady=20)
+        ctk.CTkLabel(self, text="Options", font=("Menlo", 18)).pack(pady=20)
 
         self.k_entry = ctk.CTkEntry(self, width=120, placeholder_text="Enter k")
         self.k_entry.pack(pady=8)
@@ -54,7 +54,7 @@ class App(ctk.CTk):
         self.main_frame = ctk.CTkFrame(self)
         self.main_frame.pack(side="left", fill="none", expand=True)
 
-        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
+        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Menlo", 24))
         self.label.pack(pady=40)
 
     def display_closest(self, *args):
