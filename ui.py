@@ -13,7 +13,6 @@ class App(ctk.CTk):
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
         self.geometry("1300x800")
 
-
         self.bg_img = tk.PhotoImage(file="Starfield 8.png")
 
         self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
@@ -36,5 +35,5 @@ class App(ctk.CTk):
         self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
         self.label.pack(pady=40)
 
-    def on_k_change():
+    def on_k_change(self):
         pass
