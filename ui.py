@@ -13,6 +13,7 @@ class App(ctk.CTk):
 
         self.k_entry = ctk.CTkEntry(self, width=120, placeholder_text="Enter k")
         self.k_entry.pack(pady=8)
+        self.k_entry.bind("<KeyRelease>", self.on_k_change)
 
         self.lookup = ctk.CTkButton(self, text="Look up closest galaxies")
         self.lookup.pack(pady=10)
@@ -24,8 +25,5 @@ class App(ctk.CTk):
         self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=("Arial", 24))
         self.label.pack(pady=40)
 
-    def say_hi(self):
-        self.label.configure(text="Hi 👋")
-
-    def say_hello(self):
-        self.label.configure(text="Hello!")
+    def on_k_change():
+        pass
