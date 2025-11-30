@@ -47,12 +47,11 @@ class MenuFrame(ctk.CTkFrame):
         self.prompt.pack(pady=(10, 10))
 
         # Input box
-        self.input = ctk.CTkEntry(self, width=120, font=(FONT, 14), justify="center")
+        self.input = ctk.CTkEntry(self, width=120, font=(FONT, 14), fg_color="transparent", bg_color="transparent", justify="center")
         self.input.pack()
 
         # Submit button
-        self.submit = ctk.CTkButton(self, width=120, fg_color=NEON_PURPLE, text="Submit", text_color="black",
-                                    font=(FONT, 14), command=self.handle_submit)
+        self.submit = ctk.CTkButton(self, width=120, fg_color=NEON_PURPLE, text="Submit", text_color="black", font=(FONT, 14), command=self.handle_submit)
         self.submit.pack(pady=(10, 5))
 
         # Error message (initially nothing)
@@ -109,6 +108,9 @@ class App(ctk.CTk):
         self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
+        self.output_label = ctk.CTkLabel(self, text=">")
+        self.output_label.pack()
+
         # Set partition windows
         self.menu = MenuFrame(self, len(self.galaxies), image_path, width=500, height=300,
                               on_submit=self.display_closest)
@@ -123,14 +125,14 @@ class App(ctk.CTk):
         # self.label.pack(pady=40)
 
     def display_closest(self, *args):
-        k = self.k_entry.get()
+        k = self.menu.input.get()
         if k.isdecimal():
             results = HeapChoose(self.galaxies, int(k))
             label_string = ""
             for i, galaxy in enumerate(results):
-                line = f"{i}. " + galaxy.return_print_output(i)
-                label_string += line
+                line = f"{i}. " + galaxy.return_print_output()
+                label_string += line + "\n"
 
-            self.label.configure(text=label_string)
+            self.output_label.configure(text=label_string)
         else:
             return []
