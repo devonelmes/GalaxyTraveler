@@ -7,7 +7,7 @@ from galaxy import Galaxy
 from os.path import join
 from helpers import HeapChoose, quickselect, parse_galaxies
 
-FONT = "Courier"
+FONT = "Menlo"
 
 
 class MenuFrame(ctk.CTkFrame):
@@ -95,13 +95,16 @@ class App(ctk.CTk):
         # self.main_frame = ctk.CTkFrame(self)
         # self.main_frame.pack(side="left", fill="none", expand=True)
 
-        # self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=(FONT, 24))
-        # self.label.pack(pady=40)
+        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=(FONT, 24))
+        self.label.pack(pady=40)
 
     def display_closest(self, *args):
         k = self.k_entry.get()
         if k.isdecimal():
             results = HeapChoose(self.galaxies, int(k))
-            return results
+            for i, galaxy in enumerate(heap_result):
+                    galaxy.print_galaxy(i)
+
+            self.label.configure(text="")
         else:
             return []
