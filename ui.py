@@ -5,7 +5,7 @@ import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
 from os.path import join
-from helpers import HeapChoose, quickselect, parse_galaxies
+from helpers import heap_choose, quickselect, parse_galaxies
 
 FONT = "Courier"
 NEON_PURPLE = "#9b4dff"
@@ -80,12 +80,54 @@ class MenuFrame(ctk.CTkFrame):
 
 class DisplayFrame(ctk.CTkFrame):
     # Create galaxy display scrollable frame in bottom left of the window.
-    DIMENSIONS = (500, 500)
+    # DIMENSIONS = (500, 500), top left corner of frame at (x=0, y=300)
+    def __init__(self, master, image_path, width, height):
+        super().__init__(master, width=width, height=height, fg_color=NEON_PURPLE)
+
+        # Make frame fixed size
+        self.pack_propagate(False)
+
+        # Place frame in bottom left of window
+        self.place(x=0, y=300)
+
+        # Set background to match window (from Lang's code in App())
+        border = 12
+        pil_image = Image.open(image_path)
+        self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(width-border, height-border))
+        self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Set title
+        self.title = ctk.CTkLabel(self, text="GALAXY DATA", fg_color="black", font=(FONT, 20, "bold"))
+        self.title.pack(pady=(30, 10))
+
+        # Still obv need to implement scrolling part and actually format the results to output here
 
 
 class GraphFrame(ctk.CTkFrame):
     # Create graph display canvas frame on the right side of the window.
-    DIMENSIONS = (800, 800)
+    def __init__(self, master, image_path, width, height):
+        super().__init__(master, width=width, height=height, fg_color=NEON_PURPLE)
+
+        # Make frame fixed size
+        self.pack_propagate(False)
+
+        # Place frame in right side of window
+        self.place(x=500, y=0)
+
+        # Set background to match window (from Lang's code in App())
+        border = 12
+        pil_image = Image.open(image_path)
+        self.bg_img = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(width - border, height - border))
+        self.bg_label = ctk.CTkLabel(self, image=self.bg_img, text="")
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Set title
+        self.title = ctk.CTkLabel(self, text="GALAXY GRAPHIC", fg_color="black", font=(FONT, 20, "bold"))
+        self.title.pack(pady=(30, 10))
+
+        # Still obv need to implement canvas for graphics/animation
+        # just putting this here for frame definition ?
 
 
 class App(ctk.CTk):
@@ -114,20 +156,13 @@ class App(ctk.CTk):
         # Set partition windows
         self.menu = MenuFrame(self, len(self.galaxies), image_path, width=500, height=300,
                               on_submit=self.display_closest)
-        self.display = None # placeholder for scrolling frame
-        self.graphic = None # placeholder for canvas frame (animation? graph?)
-
-        # Main content area
-        # self.main_frame = ctk.CTkFrame(self)
-        # self.main_frame.pack(side="left", fill="none", expand=True)
-
-        # self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=(FONT, 24))
-        # self.label.pack(pady=40)
+        self.display = DisplayFrame(self, image_path, width=500, height=445)
+        self.graphic = GraphFrame(self, image_path, width=780, height=745)
 
     def display_closest(self, *args):
         k = self.menu.input.get()
         if k.isdecimal():
-            results = HeapChoose(self.galaxies, int(k))
+            results = heap_choose(self.galaxies, int(k))
             label_string = ""
             for i, galaxy in enumerate(results):
                 line = f"{i}. " + galaxy.return_print_output()
