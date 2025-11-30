@@ -66,12 +66,12 @@ def main():
                 end = time.time_ns()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Max-heap.")
-                print(f"The {k} closest galaxies are: ")
+                print(f"\nThe {k} closest galaxies are: ")
                 print()
                 for i, galaxy in enumerate(heap_result):
                     galaxy.print_galaxy(i)
-                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print(f"\nThis method took ~{(end - start)} nanoseconds.")
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
             else:
                 start = time.time_ns()
                 quick_arr = quickselect(galaxies, k)
@@ -82,8 +82,8 @@ def main():
                 print()
                 for i, galaxy in enumerate(quick_arr):
                     galaxy.print_galaxy(i)
-                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print(f"\nThis method took ~{(end - start)} nanoseconds.")
+                print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 galaxies.clear()
         elif option == 2:
             print("✴ Thank you for using our Galaxy Travel Planner. Have an out-of-this-world day! ✴")
