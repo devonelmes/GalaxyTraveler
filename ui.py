@@ -95,16 +95,18 @@ class App(ctk.CTk):
         # self.main_frame = ctk.CTkFrame(self)
         # self.main_frame.pack(side="left", fill="none", expand=True)
 
-        self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=(FONT, 24))
-        self.label.pack(pady=40)
+        # self.label = ctk.CTkLabel(self.main_frame, text="Hello!", font=(FONT, 24))
+        # self.label.pack(pady=40)
 
     def display_closest(self, *args):
         k = self.k_entry.get()
         if k.isdecimal():
             results = HeapChoose(self.galaxies, int(k))
-            for i, galaxy in enumerate(heap_result):
-                    galaxy.print_galaxy(i)
+            label_string = ""
+            for i, galaxy in enumerate(results):
+                line = f"{i}. " + galaxy.return_print_output(i)
+                label_string += line
 
-            self.label.configure(text="")
+            self.label.configure(text=label_string)
         else:
             return []

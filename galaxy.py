@@ -65,5 +65,5 @@ class Galaxy:
         print(f"{num}. {self.name} is {self.distance:0.5f} Megaparsecs away. That's {mpc_to_lightyears():0.5f} light-years!")
         print()
     
-    def return_print_output(self, num):
+    def return_print_output(self):
         return f"{self.name} is {self.distance:0.5f} Megaparsecs away. That's {mpc_to_lightyears():0.5f} light-years!"
