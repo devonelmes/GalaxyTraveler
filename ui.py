@@ -5,7 +5,7 @@ import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
 from os.path import join
-from helpers import HeapChoose, quickselect, parse_galaxies
+from helpers import heap_choose, quickselect, parse_galaxies
 
 FONT = "Courier"
 NEON_PURPLE = "#9b4dff"
@@ -162,7 +162,7 @@ class App(ctk.CTk):
     def display_closest(self, *args):
         k = self.menu.input.get()
         if k.isdecimal():
-            results = HeapChoose(self.galaxies, int(k))
+            results = heap_choose(self.galaxies, int(k))
             label_string = ""
             for i, galaxy in enumerate(results):
                 line = f"{i}. " + galaxy.return_print_output()

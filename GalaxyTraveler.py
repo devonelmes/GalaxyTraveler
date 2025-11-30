@@ -62,7 +62,7 @@ def main():
                     print("Invalid input.")
             if ds == 1:
                 start = time.time_ns()
-                heap_result = HeapChoose(galaxies, k)
+                heap_result = heap_choose(galaxies, k)
                 end = time.time_ns()
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 print("\nYou chose Max-heap.")

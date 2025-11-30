@@ -88,7 +88,7 @@ def quickselect(arr, k):
 
     return sorted(arr_copy[:k], key=lambda g: g.distance)
 
-def HeapChoose(galaxies, k): # returns function run time
+def heap_choose(galaxies, k): # returns function run time
     start = time.time()
     closest_heap = MaxHeap(k)
     closest_heap.insert_first_k(galaxies[0:k])
