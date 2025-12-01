@@ -80,7 +80,6 @@ class MenuFrame(ctk.CTkFrame):
 
 class DisplayFrame(ctk.CTkFrame):
     # Create galaxy display scrollable frame in bottom left of the window.
-    # DIMENSIONS = (500, 500), top left corner of frame at (x=0, y=300)
     def __init__(self, master, image_path, width, height):
         super().__init__(master, width=width, height=height, fg_color=NEON_PURPLE)
 
@@ -101,7 +100,10 @@ class DisplayFrame(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self, text="GALAXY DATA", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
-        # Still obv need to implement scrolling part and actually format the results to output here
+        # Create textbox for results
+        self.textbox = ctk.CTkTextbox(self, width=450, fg_color="black", font=(FONT, 14))
+        self.textbox.pack(pady=(20, 0))
+        self.textbox.insert("end", "e\nx\na\nm\np\nl\ne\n\nt\no\n\nt\ne\ns\nt\n\ns\nc\nr\no\nl\nl")
 
 
 class GraphFrame(ctk.CTkFrame):
