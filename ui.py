@@ -133,7 +133,7 @@ class GraphFrame(ctk.CTkFrame):
         self.title.pack(pady=(30, 10))
 
         # Still obv need to implement canvas for graphics/animation
-        # just putting this here for frame definition ?
+        # just putting this here for visual frame definition
 
 
 class App(ctk.CTk):
