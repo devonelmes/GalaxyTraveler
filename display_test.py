@@ -15,7 +15,11 @@ def ease_in_out_cubic(t):
     return 1 - pow(-2 * t + 2, 3) / 2
 
 # --- SETUP FIGURE ---
-fig, ax = plt.subplots(figsize=(14, 8))
+FIG_W = 700
+FIG_H = 70
+DPI = 100
+
+fig, ax = plt.subplots(figsize=(FIG_W / DPI, FIG_H / DPI))
 fig.patch.set_facecolor("black")
 ax.set_facecolor("white")
 ax.set_xlim(-2, 2)
@@ -24,13 +28,13 @@ ax.axis('off')
 
 # --- INITIAL POSITIONS ---
 earth_pos = np.array([0, 0])
-n = 20
+n = 1250
 galaxies = heap_choose(galaxies, n)
 
 distances = np.array([g.distance for g in galaxies])
 max_dist = distances.max()
 
-scaled_r = 0.2 + 2.2 * (distances / max_dist)
+scaled_r = 0.2 + 2 * (distances / max_dist)
 
 n = len(galaxies)
 d_norm = (distances - distances.min()) / (distances.max() - distances.min())

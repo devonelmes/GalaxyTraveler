@@ -2,7 +2,7 @@
         https://customtkinter.tomschimansky.com/
 """
 import time
-from symbol import comparison
+# from symbol import comparison
 
 import customtkinter as ctk
 from PIL import Image
@@ -36,17 +36,17 @@ class MenuFrame(ctk.CTkFrame):
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Set title
-        self.title = ctk.CTkLabel(self, text="MENU", fg_color="black", font=(FONT, 20, "bold"))
+        self.title = ctk.CTkLabel(self, text="MENU", text_color="white", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
         # Welcome text
         welcome_text = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
-        self.welcome = ctk.CTkLabel(self, text=welcome_text, fg_color="black", font=(FONT, 16))
+        self.welcome = ctk.CTkLabel(self, text=welcome_text, text_color="white", fg_color="black", font=(FONT, 16))
         self.welcome.pack(pady=(10, 10))
 
         # Prompt text
         prompt_text = f"Please enter the number of closest galaxies\nto find between 1 and {self.size}:"
-        self.prompt = ctk.CTkLabel(self, text=prompt_text, fg_color="black", font=(FONT, 14), justify="center")
+        self.prompt = ctk.CTkLabel(self, text=prompt_text, text_color="white", fg_color="black", font=(FONT, 14), justify="center")
         self.prompt.pack(pady=(10, 10))
 
         # Input box
@@ -100,11 +100,11 @@ class DisplayFrame(ctk.CTkFrame):
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Set title
-        self.title = ctk.CTkLabel(self, text="GALAXY DATA", fg_color="black", font=(FONT, 20, "bold"))
+        self.title = ctk.CTkLabel(self, text="GALAXY DATA", text_color="white", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
         # Create textbox for results
-        self.textbox = ctk.CTkTextbox(self, width=400, height=350, fg_color="black", font=(FONT, 14), wrap="word")
+        self.textbox = ctk.CTkTextbox(self, width=400, height=350, text_color="white", fg_color="black", font=(FONT, 14), wrap="word")
         self.textbox.pack(pady=(10, 10))
         # Set textbox to "disabled" (not clickable, read-only)
         self.textbox.configure(state="disabled")
@@ -129,7 +129,7 @@ class GraphFrame(ctk.CTkFrame):
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Set title
-        self.title = ctk.CTkLabel(self, text="GALAXY GRAPHIC", fg_color="black", font=(FONT, 20, "bold"))
+        self.title = ctk.CTkLabel(self, text_color="white", text="GALAXY GRAPHIC", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
         # Still obv need to implement canvas for graphics/animation
