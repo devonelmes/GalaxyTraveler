@@ -140,7 +140,7 @@ class App(ctk.CTk):
 
         # Set app window title and dimensions.
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
-        self.geometry("1300x800")
+        self.geometry("1275x800")
 
         # Set background image.
         image_path = join("Starfield Images", "Starfield 8 - 1024x1024.png")
@@ -156,8 +156,8 @@ class App(ctk.CTk):
         # Set partition windows
         self.menu = MenuFrame(self, len(self.galaxies), image_path, width=500, height=300,
                               on_submit=self.display_closest)
-        self.display = DisplayFrame(self, image_path, width=500, height=445)
-        self.graphic = GraphFrame(self, image_path, width=780, height=745)
+        self.display = DisplayFrame(self, image_path, width=500, height=500)
+        self.graphic = GraphFrame(self, image_path, width=775, height=800)
 
     def display_closest(self, *args):
         k = self.menu.input.get()
