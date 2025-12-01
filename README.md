@@ -2,10 +2,10 @@ Team: Devon Elmes, Lang Cao, Melissa Cote
 
 This is our final project for COP3530 - Data Structures and Algorithms, Fall 2025.
 
-Our program parses the data and stores it in an unsorted container. Upon running,
-it displays the UI window and then prompts the user for input, to find the k 
-(specified by user) closest galaxies. It then uses two different search algorithms
-(heapsort and quickselect) to find them and displays it to the user.
+Our program parses the data in NED-D: A Master List of Redshift-Independent Extragalactic Distances 
+(Version 17.1.0 May 2020) and stores it in an unsorted container. Upon running, it displays the UI window and then 
+prompts the user for input, to  find the k (specified by user) closest galaxies. It then uses two different search 
+algorithms (heapsort and quickselect) to find them and displays it to the user.
 
 Installing dependencies:
 > pip3 install customtkinter
