@@ -47,8 +47,6 @@ def parse_galaxies(filepath):
         for galaxy in galaxies:
             galaxy.set_distance()
 
-        print("Invalid rows in file: " + str(invalid_count))
-        print("Galaxies in list: " + str(len(galaxies)))
     return galaxies
 
 def quickselect(arr, k):
