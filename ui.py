@@ -165,7 +165,7 @@ class App(ctk.CTk):
             results = heap_choose(self.galaxies, int(k))
             label_string = ""
             for i, galaxy in enumerate(results):
-                line = f"{i}. " + galaxy.return_print_output()
+                line = f"{i + 1}. " + galaxy.return_print_output()
                 label_string += line + "\n"
 
             self.output_label.configure(text=label_string)

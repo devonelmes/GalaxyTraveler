@@ -69,7 +69,7 @@ def main():
                 print(f"\nThe {k} closest galaxies are: ")
                 print()
                 for i, galaxy in enumerate(heap_result):
-                    galaxy.print_galaxy(i)
+                    galaxy.print_galaxy(i + 1)
                 print(f"\nThis method took ~{(end - start)} nanoseconds.")
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
             else:
@@ -81,7 +81,7 @@ def main():
                 print(f"\nThe {k} closest galaxies are: ")
                 print()
                 for i, galaxy in enumerate(quick_arr):
-                    galaxy.print_galaxy(i)
+                    galaxy.print_galaxy(i + 1)
                 print(f"\nThis method took ~{(end - start)} nanoseconds.")
                 print("\n✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴✴")
                 galaxies.clear()
