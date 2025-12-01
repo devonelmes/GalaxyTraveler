@@ -104,7 +104,7 @@ class DisplayFrame(ctk.CTkFrame):
         self.title.pack(pady=(30, 10))
 
         # Create textbox for results
-        self.textbox = ctk.CTkTextbox(self, width=450, height=400, fg_color="black", font=(FONT, 14), wrap="word")
+        self.textbox = ctk.CTkTextbox(self, width=400, height=350, fg_color="black", font=(FONT, 14), wrap="word")
         self.textbox.pack(pady=(10, 10))
         # Set textbox to "disabled" (not clickable, read-only)
         self.textbox.configure(state="disabled")
@@ -172,7 +172,7 @@ class App(ctk.CTk):
         heap_result = heap_choose(self.galaxies, int(k))
         heap_end = time.time()
         heap_time = heap_end - heap_start
-        heap_string = (f"****************************************************\n"
+        heap_string = (f"***********************************************\n"
                        f"Showing {k} closest galaxies using Heapsort...\n")
         for i, galaxy in enumerate(heap_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
@@ -183,14 +183,14 @@ class App(ctk.CTk):
         quick_result = quickselect(self.galaxies, int(k))
         quick_end = time.time()
         quick_time = quick_end - quick_start
-        quick_string = (f"\n\n****************************************************\n"
-                        f"\nShowing {k} closest galaxies using Quickselect...\n")
+        quick_string = (f"\n\n***********************************************\n"
+                        f"Showing {k} closest galaxies using Quickselect...\n")
         for i, galaxy in enumerate(quick_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
             quick_string += "\n" + line + "\n"
         quick_string += f"\n>>> Quickselect took {quick_time*1000:.4f} milliseconds."
 
-        comparison = "\n\n****************************************************\n"
+        comparison = "\n\n***********************************************\n"
         if quick_time > heap_time:
             # heap faster...
             speed = quick_time / heap_time
