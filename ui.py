@@ -173,11 +173,11 @@ class App(ctk.CTk):
         heap_end = time.time()
         heap_time = heap_end - heap_start
         heap_string = (f"***********************************************\n"
-                       f"Showing {k} closest galaxies using Heapsort...\n")
+                       f"Showing {k} closest galaxies using Heapselect...\n")
         for i, galaxy in enumerate(heap_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
             heap_string += "\n" + line + "\n"
-        heap_string += f"\n>>> Heapsort took {heap_time*1000:.4f} milliseconds."
+        heap_string += f"\n>>> Heapselect took {heap_time*1000:.4f} milliseconds."
 
         quick_start = time.time()
         quick_result = quickselect(self.galaxies, int(k))
@@ -194,13 +194,13 @@ class App(ctk.CTk):
         if quick_time > heap_time:
             # heap faster...
             speed = quick_time / heap_time
-            comparison += f"\nHeapsort was {speed:.1f} times faster than Quickselect."
+            comparison += f"\nHeapselect was {speed:.1f} times faster than Quickselect."
         elif heap_time > quick_time:
             # quickselect faster...
             speed = heap_time / quick_time
-            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapsort."
+            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapselect."
         else:
-            comparison += f"\nHeapsort and Quickselect took the same amount of tine to execute."
+            comparison += f"\nHeapselect and Quickselect took the same amount of tine to execute."
 
         # Access display frame textbox, temporarily enable normal state, clear, fill, disable again
         textbox = self.display.textbox
