@@ -80,9 +80,6 @@ annot = ax.annotate(
 )
 annot.set_visible(False)
 
-# Extract galaxy names for tooltips
-galaxy_names = [g.name for g in galaxies]
-
 # --- RUN ANIMATION ---
 anim = FuncAnimation(fig, update, frames=101, interval=16, blit=True, repeat=False)
 plt.show()
