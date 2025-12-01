@@ -7,7 +7,7 @@ from galaxy import Galaxy
 from os.path import join
 from helpers import heap_choose, quickselect, parse_galaxies
 
-FONT = "Courier"
+FONT = "Menlo"
 NEON_PURPLE = "#9b4dff"
 
 
