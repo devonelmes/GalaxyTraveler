@@ -137,7 +137,7 @@ class GraphFrame(ctk.CTkFrame):
 
 
 class App(ctk.CTk):
-    DIMENSIONS = (1300, 800)
+    DIMENSIONS = (1275, 800)
 
     def __init__(self):
         super().__init__()
