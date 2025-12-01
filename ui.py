@@ -101,9 +101,10 @@ class DisplayFrame(ctk.CTkFrame):
         self.title.pack(pady=(30, 10))
 
         # Create textbox for results
-        self.textbox = ctk.CTkTextbox(self, width=450, fg_color="black", font=(FONT, 14))
-        self.textbox.pack(pady=(20, 0))
-        self.textbox.insert("end", "e\nx\na\nm\np\nl\ne\n\nt\no\n\nt\ne\ns\nt\n\ns\nc\nr\no\nl\nl")
+        self.textbox = ctk.CTkTextbox(self, width=450, height=400, fg_color="black", font=(FONT, 14), wrap="word")
+        self.textbox.pack(pady=(10, 10))
+        # Set textbox to "disabled" (not clickable, read-only)
+        self.textbox.configure(state="disabled")
 
 
 class GraphFrame(ctk.CTkFrame):
@@ -161,15 +162,25 @@ class App(ctk.CTk):
         self.display = DisplayFrame(self, image_path, width=500, height=500)
         self.graphic = GraphFrame(self, image_path, width=775, height=800)
 
-    def display_closest(self, *args):
+    def display_closest(self, k):
         k = self.menu.input.get()
-        if k.isdecimal():
-            results = heap_choose(self.galaxies, int(k))
-            label_string = ""
-            for i, galaxy in enumerate(results):
-                line = f"{i + 1}. " + galaxy.return_print_output()
-                label_string += line + "\n"
 
-            self.output_label.configure(text=label_string)
-        else:
-            return []
+        heap_result = heap_choose(self.galaxies, int(k))
+        heap_string = f"Showing {k} closest galaxies using Heapsort...\n"
+        for i, galaxy in enumerate(heap_result):
+            line = f"{i + 1}. " + galaxy.return_print_output()
+            heap_string += "\n" + line + "\n"
+
+        quick_result = quickselect(self.galaxies, int(k))
+        quick_string = f"\n\nShowing {k} closest galaxies using Quickselect...\n"
+        for i, galaxy in enumerate(quick_result):
+            line = f"{i + 1}. " + galaxy.return_print_output()
+            quick_string += "\n" + line + "\n"
+
+        # Access display frame textbox, temporarily enable normal state, clear, fill, disable again
+        textbox = self.display.textbox
+        textbox.configure(state="normal")
+        textbox.delete("1.0", "end")
+        textbox.insert("end", heap_string)
+        textbox.insert("end", quick_string)
+        textbox.configure(state="disabled")
