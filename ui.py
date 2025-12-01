@@ -1,6 +1,9 @@
 """References:
         https://customtkinter.tomschimansky.com/
 """
+import time
+from symbol import comparison
+
 import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
@@ -80,7 +83,6 @@ class MenuFrame(ctk.CTkFrame):
 
 class DisplayFrame(ctk.CTkFrame):
     # Create galaxy display scrollable frame in bottom left of the window.
-    # DIMENSIONS = (500, 500), top left corner of frame at (x=0, y=300)
     def __init__(self, master, image_path, width, height):
         super().__init__(master, width=width, height=height, fg_color=NEON_PURPLE)
 
@@ -101,7 +103,11 @@ class DisplayFrame(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self, text="GALAXY DATA", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
-        # Still obv need to implement scrolling part and actually format the results to output here
+        # Create textbox for results
+        self.textbox = ctk.CTkTextbox(self, width=400, height=350, fg_color="black", font=(FONT, 14), wrap="word")
+        self.textbox.pack(pady=(10, 10))
+        # Set textbox to "disabled" (not clickable, read-only)
+        self.textbox.configure(state="disabled")
 
 
 class GraphFrame(ctk.CTkFrame):
@@ -127,11 +133,11 @@ class GraphFrame(ctk.CTkFrame):
         self.title.pack(pady=(30, 10))
 
         # Still obv need to implement canvas for graphics/animation
-        # just putting this here for frame definition ?
+        # just putting this here for visual frame definition
 
 
 class App(ctk.CTk):
-    DIMENSIONS = (1300, 800)
+    DIMENSIONS = (1275, 800)
 
     def __init__(self):
         super().__init__()
@@ -140,7 +146,7 @@ class App(ctk.CTk):
 
         # Set app window title and dimensions.
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
-        self.geometry("1300x800")
+        self.geometry("1275x800")
 
         # Set background image.
         image_path = join("Starfield Images", "Starfield 8 - 1024x1024.png")
@@ -156,18 +162,51 @@ class App(ctk.CTk):
         # Set partition windows
         self.menu = MenuFrame(self, len(self.galaxies), image_path, width=500, height=300,
                               on_submit=self.display_closest)
-        self.display = DisplayFrame(self, image_path, width=500, height=445)
-        self.graphic = GraphFrame(self, image_path, width=780, height=745)
+        self.display = DisplayFrame(self, image_path, width=500, height=500)
+        self.graphic = GraphFrame(self, image_path, width=775, height=800)
 
-    def display_closest(self, *args):
+    def display_closest(self, k):
         k = self.menu.input.get()
-        if k.isdecimal():
-            results = heap_choose(self.galaxies, int(k))
-            label_string = ""
-            for i, galaxy in enumerate(results):
-                line = f"{i + 1}. " + galaxy.return_print_output()
-                label_string += line + "\n"
 
-            self.output_label.configure(text=label_string)
+        heap_start = time.time()
+        heap_result = heap_choose(self.galaxies, int(k))
+        heap_end = time.time()
+        heap_time = heap_end - heap_start
+        heap_string = (f"***********************************************\n"
+                       f"Showing {k} closest galaxies using Heapsort...\n")
+        for i, galaxy in enumerate(heap_result):
+            line = f"{i + 1}. " + galaxy.return_print_output()
+            heap_string += "\n" + line + "\n"
+        heap_string += f"\n>>> Heapsort took {heap_time*1000:.4f} milliseconds."
+
+        quick_start = time.time()
+        quick_result = quickselect(self.galaxies, int(k))
+        quick_end = time.time()
+        quick_time = quick_end - quick_start
+        quick_string = (f"\n\n***********************************************\n"
+                        f"Showing {k} closest galaxies using Quickselect...\n")
+        for i, galaxy in enumerate(quick_result):
+            line = f"{i + 1}. " + galaxy.return_print_output()
+            quick_string += "\n" + line + "\n"
+        quick_string += f"\n>>> Quickselect took {quick_time*1000:.4f} milliseconds."
+
+        comparison = "\n\n***********************************************\n"
+        if quick_time > heap_time:
+            # heap faster...
+            speed = quick_time / heap_time
+            comparison += f"\nHeapsort was {speed:.1f} times faster than Quickselect."
+        elif heap_time > quick_time:
+            # quickselect faster...
+            speed = heap_time / quick_time
+            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapsort."
         else:
-            return []
+            comparison += f"\nHeapsort and Quickselect took the same amount of tine to execute."
+
+        # Access display frame textbox, temporarily enable normal state, clear, fill, disable again
+        textbox = self.display.textbox
+        textbox.configure(state="normal")
+        textbox.delete("1.0", "end")
+        textbox.insert("end", heap_string)
+        textbox.insert("end", quick_string)
+        textbox.insert("end", comparison)
+        textbox.configure(state="disabled")
