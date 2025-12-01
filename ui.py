@@ -1,6 +1,9 @@
 """References:
         https://customtkinter.tomschimansky.com/
 """
+import time
+from symbol import comparison
+
 import customtkinter as ctk
 from PIL import Image
 from galaxy import Galaxy
@@ -165,17 +168,39 @@ class App(ctk.CTk):
     def display_closest(self, k):
         k = self.menu.input.get()
 
+        heap_start = time.time()
         heap_result = heap_choose(self.galaxies, int(k))
-        heap_string = f"Showing {k} closest galaxies using Heapsort...\n"
+        heap_end = time.time()
+        heap_time = heap_end - heap_start
+        heap_string = (f"****************************************************\n"
+                       f"Showing {k} closest galaxies using Heapsort...\n")
         for i, galaxy in enumerate(heap_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
             heap_string += "\n" + line + "\n"
+        heap_string += f"\n>>> Heapsort took {heap_time*1000:.4f} milliseconds."
 
+        quick_start = time.time()
         quick_result = quickselect(self.galaxies, int(k))
-        quick_string = f"\n\nShowing {k} closest galaxies using Quickselect...\n"
+        quick_end = time.time()
+        quick_time = quick_end - quick_start
+        quick_string = (f"\n\n****************************************************\n"
+                        f"\nShowing {k} closest galaxies using Quickselect...\n")
         for i, galaxy in enumerate(quick_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
             quick_string += "\n" + line + "\n"
+        quick_string += f"\n>>> Quickselect took {quick_time*1000:.4f} milliseconds."
+
+        comparison = "\n\n****************************************************\n"
+        if quick_time > heap_time:
+            # heap faster...
+            speed = quick_time / heap_time
+            comparison += f"\nHeapsort was {speed:.1f} times faster than Quickselect."
+        elif heap_time > quick_time:
+            # quickselect faster...
+            speed = heap_time / quick_time
+            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapsort."
+        else:
+            comparison += f"\nHeapsort and Quickselect took the same amount of tine to execute."
 
         # Access display frame textbox, temporarily enable normal state, clear, fill, disable again
         textbox = self.display.textbox
@@ -183,4 +208,5 @@ class App(ctk.CTk):
         textbox.delete("1.0", "end")
         textbox.insert("end", heap_string)
         textbox.insert("end", quick_string)
+        textbox.insert("end", comparison)
         textbox.configure(state="disabled")
