@@ -12,24 +12,6 @@ References:
 from ui import App
 from helpers import *
 
-WELCOME = "✴✴✴ Welcome, galaxy traveler! ✴✴✴"
-
-MENU = """
-========= MENU =========
-Please select from the following:
-1. Choose how many of the closest galaxies to find.
-2. Exit.
-========================
-
-Selection: """
-
-DATA_STRUC = """
-Which method would you like to use to find the galaxies?
-1. Max-heap
-2. Quickselect
-
-Selection: """
-
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
