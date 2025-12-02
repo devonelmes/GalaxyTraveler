@@ -1,19 +1,16 @@
 """References:
         https://customtkinter.tomschimansky.com/
 """
-import time
-# from symbol import comparison
 
+import time
 import customtkinter as ctk
-from PIL import Image
-from galaxy import Galaxy
-from os.path import join
-from helpers import heap_choose, quickselect, parse_galaxies
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from matplotlib.figure import Figure
 import numpy as np
+from PIL import Image
+from os.path import join
+from matplotlib.figure import Figure
+from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from helpers import heap_choose, quickselect, parse_galaxies
 
 FONT = "Menlo"
 NEON_PURPLE = "#9b4dff"
@@ -201,8 +198,6 @@ class GraphFrame(ctk.CTkFrame):
         if t < 0.5:
             return 4 * t**3
         return 1 - pow(-2 * t + 2, 3) / 2
-
-    
 
 
 class App(ctk.CTk):
