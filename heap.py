@@ -5,6 +5,7 @@
         https://docs.python.org/3/howto/sorting.html
 """
 
+
 class MaxHeap:
     def __init__(self, k):
         self.max_size = k # max number of nodes

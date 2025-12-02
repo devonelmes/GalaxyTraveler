@@ -3,7 +3,6 @@ import random
 import copy
 from galaxy import Galaxy
 from heap import MaxHeap
-import time
 
 def parse_galaxies(filepath):
     with open(filepath, mode = 'r') as file:

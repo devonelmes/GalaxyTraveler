@@ -10,6 +10,7 @@ mpc_to_lightyears():
     https://en.wikipedia.org/wiki/Parsec
 """
 
+
 class Galaxy:
     def __init__(self, name):
         self.name = name # galaxy id
