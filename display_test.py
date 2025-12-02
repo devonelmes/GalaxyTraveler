@@ -16,25 +16,25 @@ def ease_in_out_cubic(t):
 
 # --- SETUP FIGURE ---
 FIG_W = 700
-FIG_H = 70
+FIG_H = 700
 DPI = 100
 
-fig, ax = plt.subplots(figsize=(FIG_W / DPI, FIG_H / DPI))
+fig, ax = plt.subplots(figsize=(FIG_W / DPI, FIG_H / DPI), dpi=DPI)
 fig.patch.set_facecolor("black")
 ax.set_facecolor("white")
 ax.set_xlim(-2, 2)
 ax.set_ylim(-2, 2)
 ax.axis('off')
-
+fig.subplots_adjust(0,0,1,1)
 # --- INITIAL POSITIONS ---
 earth_pos = np.array([0, 0])
-n = 1250
+n = 40
 galaxies = heap_choose(galaxies, n)
 
 distances = np.array([g.distance for g in galaxies])
 max_dist = distances.max()
 
-scaled_r = 0.2 + 2 * (distances / max_dist)
+scaled_r = 0.2 + 1.8 * (distances / max_dist)
 
 n = len(galaxies)
 d_norm = (distances - distances.min()) / (distances.max() - distances.min())
@@ -54,24 +54,20 @@ galaxy_target = np.stack([final_x, final_y], axis=1)
 
 # --- PLOTS ---
 earth_plot, = ax.plot([0], [0], 'co', markersize=12)
-galaxy_plots = [ax.plot([0], [0], 'wo', markersize=4)[0] for _ in range(n)]
+scatter = ax.scatter(galaxy_start[:,0], galaxy_start[:,1], s=6, c='white')
 
 # --- ANIMATION UPDATE ---
 def update(frame):
     t = frame / 100
     smooth = ease_in_out_cubic(t)
 
-    # Earth slides left
-    earth_x = 0 - smooth * 2
+    earth_x = 0 - smooth * 1.8
     earth_plot.set_data([earth_x], [0])
 
-    # Galaxies interpolate from circle to line
-    interp_positions = galaxy_start * (1 - smooth) + galaxy_target * smooth
+    interp = galaxy_start * (1 - smooth) + galaxy_target * smooth
+    scatter.set_offsets(interp)
 
-    for i, point in enumerate(galaxy_plots):
-        point.set_data([interp_positions[i, 0]], [interp_positions[i, 1]])
-
-    return [earth_plot] + galaxy_plots
+    return [earth_plot, scatter]#[earth_plot, bloom, scatter]
 
 annot = ax.annotate(
     "",

@@ -10,6 +10,7 @@ it displays the UI window and then prompts the user for input, to find the k
 Installing dependencies:
 > pip3 install customtkinter
 > pip3 install pillow
+> pip3 install matplotlib
 
 Our dataset can be found here: https://ned.ipac.caltech.edu/Library/Distances/
 

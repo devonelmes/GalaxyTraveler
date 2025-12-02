@@ -9,6 +9,11 @@ from PIL import Image
 from galaxy import Galaxy
 from os.path import join
 from helpers import heap_choose, quickselect, parse_galaxies
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from matplotlib.figure import Figure
+import numpy as np
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 FONT = "Menlo"
 NEON_PURPLE = "#9b4dff"
@@ -132,8 +137,72 @@ class GraphFrame(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self, text_color="white", text="GALAXY GRAPHIC", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
-        # Still obv need to implement canvas for graphics/animation
-        # just putting this here for visual frame definition
+        self.fig = Figure(figsize=(7, 7), dpi=100)
+        self.ax = self.fig.add_subplot(111)
+        self.fig.set_facecolor("black")
+        self.ax.set_facecolor("black")
+        self.ax.set_xlim(-2, 2)
+        self.ax.set_ylim(-2, 2)
+        self.ax.axis("off")
+        self.fig.subplots_adjust(0, 0, 1, 1)
+        self.ax.set_position([0,0,1,1])
+
+        earth_pos = np.array([0, 0])
+
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self)
+        self.canvas_widget = self.canvas.get_tk_widget()
+        self.canvas_widget.pack(fill="both", expand=True, pady=20)
+
+    def update_animation(self, frame):
+        t = frame / 100
+        smooth = self.ease_in_out_cubic(t)
+
+        earth_x = 0 - smooth * 1.8
+        self.earth_plot.set_data([earth_x], [0])
+
+        interp = self.galaxy_start * (1 - smooth) + self.galaxy_target * smooth
+        self.scatter.set_offsets(interp)
+
+        return self.earth_plot, self.scatter
+    
+    def start_animation(self, galaxies):
+        n = len(galaxies)
+
+        distances = np.array([g.distance for g in galaxies])
+        max_dist = distances.max()
+
+        scaled_r = 0.2 + 1.8 * (distances / max_dist)
+        angles = np.linspace(0, 10*np.pi, n)
+
+        self.galaxy_start = np.stack([
+            scaled_r * np.cos(angles),
+            scaled_r * np.sin(angles)
+        ], axis=1)
+
+        norm = (distances - distances.min()) / (distances.max() - distances.min())
+        final_x = -1 + 2 * norm
+        final_y = np.zeros(n)
+        self.galaxy_target = np.stack([final_x, final_y], axis=1)
+
+        self.ax.clear()
+        self.ax.set_facecolor("black")
+        self.ax.set_xlim(-2, 2)
+        self.ax.set_ylim(-2, 2)
+        self.ax.axis("off")
+
+        self.earth_plot, = self.ax.plot([0], [0], 'co', markersize=12)
+        self.scatter = self.ax.scatter(self.galaxy_start[:,0], self.galaxy_start[:,1], s=6, c='white')
+
+        self.anim = FuncAnimation(self.fig, self.update_animation, frames=101, interval=16, blit=True, repeat=False)
+
+        self.canvas.draw()
+
+    def ease_in_out_cubic(self, t):
+        if t < 0.5:
+            return 4 * t**3
+        return 1 - pow(-2 * t + 2, 3) / 2
+
+    
 
 
 class App(ctk.CTk):
@@ -173,11 +242,11 @@ class App(ctk.CTk):
         heap_end = time.time()
         heap_time = heap_end - heap_start
         heap_string = (f"***********************************************\n"
-                       f"Showing {k} closest galaxies using Heapsort...\n")
+                       f"Showing {k} closest galaxies using Heapselect...\n")
         for i, galaxy in enumerate(heap_result):
             line = f"{i + 1}. " + galaxy.return_print_output()
             heap_string += "\n" + line + "\n"
-        heap_string += f"\n>>> Heapsort took {heap_time*1000:.4f} milliseconds."
+        heap_string += f"\n>>> Heapselect took {heap_time*1000:.4f} milliseconds."
 
         quick_start = time.time()
         quick_result = quickselect(self.galaxies, int(k))
@@ -194,13 +263,13 @@ class App(ctk.CTk):
         if quick_time > heap_time:
             # heap faster...
             speed = quick_time / heap_time
-            comparison += f"\nHeapsort was {speed:.1f} times faster than Quickselect."
+            comparison += f"\nHeapselect was {speed:.1f} times faster than Quickselect."
         elif heap_time > quick_time:
             # quickselect faster...
             speed = heap_time / quick_time
-            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapsort."
+            comparison += f"\nQuickselect was {speed:.1f} times faster than Heapselect."
         else:
-            comparison += f"\nHeapsort and Quickselect took the same amount of tine to execute."
+            comparison += f"\nHeapselect and Quickselect took the same amount of tine to execute."
 
         # Access display frame textbox, temporarily enable normal state, clear, fill, disable again
         textbox = self.display.textbox
@@ -210,3 +279,5 @@ class App(ctk.CTk):
         textbox.insert("end", quick_string)
         textbox.insert("end", comparison)
         textbox.configure(state="disabled")
+
+        self.graphic.start_animation(heap_result)
