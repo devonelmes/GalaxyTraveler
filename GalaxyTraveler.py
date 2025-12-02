@@ -15,7 +15,7 @@ from helpers import *
 def main():
     galaxies = parse_galaxies('NED30.5.1-D-17.1.2-20200415.csv')
 
-    window = App()
+    window = App(galaxies)
     window.mainloop()
 
 if __name__ == '__main__':

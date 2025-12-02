@@ -137,7 +137,7 @@ class GraphFrame(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self, text_color="white", text="GALAXY GRAPHIC", fg_color="black", font=(FONT, 20, "bold"))
         self.title.pack(pady=(30, 10))
 
-        self.fig = Figure(figsize=(7, 7), dpi=100)
+        self.fig = Figure(figsize=(6.9, 6.9))
         self.ax = self.fig.add_subplot(111)
         self.fig.set_facecolor("black")
         self.ax.set_facecolor("black")
@@ -151,7 +151,7 @@ class GraphFrame(ctk.CTkFrame):
 
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
         self.canvas_widget = self.canvas.get_tk_widget()
-        self.canvas_widget.pack(fill="both", expand=True, pady=20)
+        self.canvas_widget.pack(pady=20)
 
     def update_animation(self, frame):
         t = frame / 100
@@ -202,16 +202,14 @@ class GraphFrame(ctk.CTkFrame):
             return 4 * t**3
         return 1 - pow(-2 * t + 2, 3) / 2
 
-    
-
 
 class App(ctk.CTk):
     DIMENSIONS = (1275, 800)
 
-    def __init__(self):
+    def __init__(self, galaxies):
         super().__init__()
 
-        self.galaxies = parse_galaxies("NED30.5.1-D-17.1.2-20200415.csv")
+        self.galaxies = galaxies
 
         # Set app window title and dimensions.
         self.title("✴ Travel Destinations: Nearest Galaxies ✴")
