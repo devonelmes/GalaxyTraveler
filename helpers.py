@@ -49,7 +49,7 @@ def parse_galaxies(filepath):
     return galaxies
 
 def quickselect(arr, k):
-    arr_copy = copy.deepcopy(arr)
+    arr_copy = arr[:]
 
     if k <= 0:
         return []
@@ -67,21 +67,19 @@ def quickselect(arr, k):
         arr_copy[store_index], arr_copy[right] = arr_copy[right], arr_copy[store_index]
         return store_index
 
-    def select(left, right, k_smallest):
-        if left == right:
-            return
+    left, right = 0, len(arr_copy) - 1
+    k_smallest = k - 1
 
-        pivot_index = random.randint(left, right)
+    while left <= right:
+        pivot_index = (left + right) // 2
         pivot_index = partition(left, right, pivot_index)
 
-        if k_smallest == pivot_index:
-            return
-        elif k_smallest < pivot_index:
-            select(left, pivot_index - 1, k_smallest)
+        if pivot_index == k_smallest:
+            break
+        elif pivot_index < k_smallest:
+            left = pivot_index + 1
         else:
-            select(pivot_index + 1, right, k_smallest)
-
-    select(0, len(arr_copy) - 1, k - 1)
+            right = pivot_index - 1
 
     return sorted(arr_copy[:k], key=lambda g: g.distance)
 
