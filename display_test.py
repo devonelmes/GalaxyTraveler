@@ -28,7 +28,7 @@ ax.axis('off')
 fig.subplots_adjust(0,0,1,1)
 # --- INITIAL POSITIONS ---
 earth_pos = np.array([0, 0])
-n = 40
+n = 30
 galaxies = heap_choose(galaxies, n)
 
 distances = np.array([g.distance for g in galaxies])

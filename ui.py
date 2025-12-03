@@ -177,7 +177,7 @@ class GraphFrame(ctk.CTkFrame):
         ], axis=1)
 
         if distances.max() == distances.min():
-            norm = 1
+            norm = np.ones(n)
         else:
             norm = (distances - distances.min()) / (distances.max() - distances.min())
         final_x = -1 + 2 * norm
