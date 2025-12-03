@@ -61,10 +61,10 @@ class Galaxy:
 
     def get_distance(self):
         return self.distance
-
-    def print_galaxy(self, num):
-        print(f"{num}. {self.name} is {self.distance:0.5f} Megaparsecs away. That's {self.mpc_to_lightyears():0.5f} light-years!")
-        print()
     
-    def return_print_output(self):
-        return f"{self.name} is {self.distance:0.5f} Megaparsecs away. That's {self.mpc_to_lightyears():0.5f} light-years!"
+    def return_print_output(self, k):
+        indent = ""
+        for i in range(len(str(k)) + 2):
+            indent += " "
+        return (f"{k}. Galaxy Name: {self.name}\n{indent}Distance in Megaparsecs: {self.distance:.5f}"
+                f"\n{indent}Distance in light-years: {self.mpc_to_lightyears():.5f}")

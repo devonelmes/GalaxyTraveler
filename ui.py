@@ -239,7 +239,7 @@ class App(ctk.CTk):
         heap_string = (f"***********************************************\n"
                        f"Showing {k} closest galaxies using Heapselect...\n")
         for i, galaxy in enumerate(heap_result):
-            line = f"{i + 1}. " + galaxy.return_print_output()
+            line = galaxy.return_print_output(i+1)
             heap_string += "\n" + line + "\n"
         heap_string += f"\n>>> Heapselect took {heap_time*1000:.4f} milliseconds."
 
@@ -250,7 +250,7 @@ class App(ctk.CTk):
         quick_string = (f"\n\n***********************************************\n"
                         f"Showing {k} closest galaxies using Quickselect...\n")
         for i, galaxy in enumerate(quick_result):
-            line = f"{i + 1}. " + galaxy.return_print_output()
+            line = galaxy.return_print_output(i+1)
             quick_string += "\n" + line + "\n"
         quick_string += f"\n>>> Quickselect took {quick_time*1000:.4f} milliseconds."
 

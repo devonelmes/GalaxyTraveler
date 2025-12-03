@@ -14,6 +14,10 @@ Installing dependencies:
 
 Our dataset can be found here: https://ned.ipac.caltech.edu/Library/Distances/
 
+For more detailed information about a result, the name of the object can be searched in the NASA/IPAC Extragalactic 
+Database (NED). The majority of the objects in NED-D are in NED, but some are not included yet. An object's entry in NED 
+may include details such as classification, coordinates, and more. NED is available at: https://ned.ipac.caltech.edu/
+
 Space image source: https://opengameart.org/content/seamless-space-backgrounds
 
 Instructions: Run the program and navigate to the UI pop-up window. Input a valid integer,
