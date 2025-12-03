@@ -176,7 +176,10 @@ class GraphFrame(ctk.CTkFrame):
             scaled_r * np.sin(angles)
         ], axis=1)
 
-        norm = (distances - distances.min()) / (distances.max() - distances.min())
+        if distances.max() == distances.min():
+            norm = 1
+        else:
+            norm = (distances - distances.min()) / (distances.max() - distances.min())
         final_x = -1 + 2 * norm
         final_y = np.zeros(n)
         self.galaxy_target = np.stack([final_x, final_y], axis=1)
